@@ -3,6 +3,7 @@ import axios from "axios";
 import Album from "./components/Album";
 import { useEffect, useState } from "react";
 import ArtistListResult from "./components/ArtistListResult";
+import VinylIcon from "./icons/vinyl.png";
 
 function App() {
   const [searchArtist, setSearchArtist] = useState<string>("");
@@ -50,7 +51,11 @@ function App() {
 
   return (
     <div className="flex flex-col p-4">
-      <div className="text-2xl mb-14 font-bold">tobimasu</div>
+      <div className="flex justify-center">
+        <div className="text-2xl mb-14 font-bold">tobimasu</div>
+        <img className="h-10 w-10" src={VinylIcon} />
+      </div>
+
       <div className="flex w-full justify-between gap-8">
         <div className="flex-1">
           <div className="flex gap-2 mb-4">
@@ -62,7 +67,7 @@ function App() {
                 value={searchArtist}
               />
               <button
-                className="px-4 py-2 bg-black rounded"
+                className="px-4 py-2 bg-black rounded ml-2"
                 onClick={onSearchForArtist}
               >
                 SEARCH
@@ -77,7 +82,10 @@ function App() {
                 <span className="font-bold">{currentlySearchingText}</span>
               </span>
               {artistResultList.map((artist: any) => (
-                <div key={artist.id} className="mb-6 p-4 bg-gray-50 rounded">
+                <div
+                  key={artist.id}
+                  className="mb-6 p-4 pallete-color rounded border-solid border-1"
+                >
                   <ArtistListResult
                     name={artist.name}
                     profilePicture={artist.picture_medium}
