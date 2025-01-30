@@ -1,6 +1,3 @@
-import React from "react";
-import { useEffect } from "react";
-
 interface AlbumProps {
   image: string;
 }
