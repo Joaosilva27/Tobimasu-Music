@@ -7,20 +7,25 @@ import ArtistListResult from "./components/ArtistListResult";
 function App() {
   const [searchArtist, setSearchArtist] = useState<string>("");
   const [isUserSearching, setIsUserSearching] = useState<boolean>(false);
+  const [currentlySearchingText, setCurrentlySearchingText] =
+    useState<string>("");
   const [artistResultList, setArtistResultList] = useState<Array<any>>([]);
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
   );
 
-  const onSearchForArtist = () => {
+  const onSearchForArtist = (e) => {
+    e.preventDefault();
+
     axios
       .get(`https://api.deezer.com/search/artist?q=${searchArtist}`)
       .then((res) => {
         const data = res.data.data;
         setArtistResultList(data);
+        setCurrentlySearchingText(searchArtist);
         setIsUserSearching(true);
 
-        // Fetch 5 albums for each artist
+        // fetching 5 albums for each artist
         const albumPromises = data.map((artist: any) =>
           axios.get(`https://api.deezer.com/artist/${artist.id}/albums?limit=5`)
         );
@@ -45,7 +50,7 @@ function App() {
 
   return (
     <div className="flex flex-col p-4">
-      <div className="text-2xl mb-14 font-bold">musicock</div>
+      <div className="text-2xl mb-14 font-bold">tobimasu</div>
       <div className="flex w-full justify-between gap-8">
         <div className="flex-1">
           <div className="flex gap-2 mb-4">
@@ -66,16 +71,20 @@ function App() {
           </div>
 
           {isUserSearching && (
-            <div className="space-y-4">
+            <div className="w-auto">
+              <span>
+                You are currently searching for:{" "}
+                <span className="font-bold">{currentlySearchingText}</span>
+              </span>
               {artistResultList.map((artist: any) => (
                 <div key={artist.id} className="mb-6 p-4 bg-gray-50 rounded">
                   <ArtistListResult
                     name={artist.name}
                     profilePicture={artist.picture_medium}
                   />
-                  <div className="mt-3">
+                  <div className="mt-3 ">
                     <h4 className="font-semibold mb-2">Top Albums:</h4>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 justify-center">
                       {artistAlbums[artist.id]?.slice(0, 5).map((album) => (
                         <div
                           key={album.id}
@@ -86,7 +95,7 @@ function App() {
                             alt={album.title}
                             className="w-32 h-32 object-cover rounded shadow"
                           />
-                          <span className="mt-2 text-sm text-center font-medium">
+                          <span className="mt-2 text-sm text-center font-medium overflow-ellipsis max-w-30">
                             {album.title}
                           </span>
                         </div>
