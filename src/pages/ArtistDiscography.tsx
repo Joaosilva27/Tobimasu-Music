@@ -14,6 +14,20 @@ const ArtistDiscography = () => {
   );
 
   useEffect(() => {
+    console.log(userFavoriteAlbums);
+  }, [userFavoriteAlbums]); // here
+
+  const addToFavorites = (coverUrl: string) => {
+    const currentFavorites = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify([...currentFavorites, coverUrl])
+    );
+  };
+
+  useEffect(() => {
     const fetchArtist = async () => {
       try {
         const artistRes = await axios.get(
@@ -73,12 +87,7 @@ const ArtistDiscography = () => {
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <span
                         className="text-white font-bold text-lg"
-                        onClick={() => {
-                          setUserFavoriteAlbums([
-                            ...album.cover_medium,
-                            ...userFavoriteAlbums,
-                          ]);
-                        }}
+                        onClick={() => addToFavorites(album.cover_medium)}
                       >
                         FAVORITE
                       </span>

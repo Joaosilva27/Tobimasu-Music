@@ -12,7 +12,6 @@ function App() {
   const [currentlySearchingText, setCurrentlySearchingText] =
     useState<string>("");
   const [artistResultList, setArtistResultList] = useState<Array<any>>([]);
-
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
   );
