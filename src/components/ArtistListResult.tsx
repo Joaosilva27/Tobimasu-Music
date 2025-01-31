@@ -1,14 +1,9 @@
 interface ArtistListProps {
   name: string;
   profilePicture: string;
-  albumCover: string;
 }
 
-const ArtistListResult = ({
-  name,
-  profilePicture,
-  albumCover,
-}: ArtistListProps) => {
+const ArtistListResult = ({ name, profilePicture }: ArtistListProps) => {
   return (
     <div className="flex m-4 ml-0">
       <div className="flex mb-4 mt-4 justify-center items-center">

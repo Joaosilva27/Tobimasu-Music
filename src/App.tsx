@@ -25,6 +25,7 @@ function App() {
         setArtistResultList(data);
         setCurrentlySearchingText(searchArtist);
         setIsUserSearching(true);
+        console.log(artistResultList);
 
         // fetching 5 albums for each artist
         const albumPromises = data.map((artist: any) =>
@@ -50,7 +51,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col p-4">
+    <div className="flex flex-col p-4 min-h-screen">
       <div className="flex justify-center">
         <div className="text-2xl mb-14 font-bold">tobimasu</div>
         <img className="h-10 w-10" src={VinylIcon} />
@@ -76,7 +77,7 @@ function App() {
           </div>
 
           {isUserSearching && (
-            <div className="w-auto">
+            <div className="w-auto pallete-color">
               <span>
                 You are currently searching for:{" "}
                 <span className="font-bold">{currentlySearchingText}</span>
