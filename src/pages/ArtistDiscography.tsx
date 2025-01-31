@@ -6,7 +6,9 @@ import { useEffect } from "react";
 const ArtistDiscography = () => {
   const { artistName } = useParams();
   const [artistProfilePicture, setArtistProfilePicture] = useState<string>("");
-  const [artistResultList, setArtistResultList] = useState<Array<any>>([]);
+  const [userFavoriteAlbums, setUserFavoriteAlbums] = useState<Array<string>>(
+    []
+  );
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
   );
@@ -58,12 +60,31 @@ const ArtistDiscography = () => {
             {Object.values(artistAlbums)
               .flat()
               .map((album) => (
-                <div key={album.id} className="flex flex-col items-center">
-                  <img
-                    src={album.cover_medium}
-                    alt={album.title}
-                    className="w-32 h-32 object-cover rounded shadow"
-                  />
+                <div
+                  key={album.id}
+                  className="group relative flex flex-col items-center"
+                >
+                  <div className="relative group">
+                    <img
+                      src={album.cover_medium}
+                      alt={album.title}
+                      className="w-32 h-32 object-cover rounded shadow transition-all duration-300 group-hover:blur-xs"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span
+                        className="text-white font-bold text-lg"
+                        onClick={() => {
+                          setUserFavoriteAlbums([
+                            ...album.cover_medium,
+                            ...userFavoriteAlbums,
+                          ]);
+                        }}
+                      >
+                        FAVORITE
+                      </span>
+                    </div>
+                  </div>
+
                   <span className="mt-2 text-sm text-center font-medium max-w-35">
                     {album.title}
                   </span>
