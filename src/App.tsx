@@ -4,6 +4,7 @@ import Album from "./components/Album";
 import { useEffect, useState } from "react";
 import ArtistListResult from "./components/ArtistListResult";
 import VinylIcon from "./icons/vinyl.png";
+import { Link } from "react-router";
 
 function App() {
   const [searchArtist, setSearchArtist] = useState<string>("");
@@ -87,10 +88,13 @@ function App() {
                   key={artist.id}
                   className="mb-6 p-4 pallete-color rounded border-solid border-1"
                 >
-                  <ArtistListResult
-                    name={artist.name}
-                    profilePicture={artist.picture_medium}
-                  />
+                  <Link to={`/artist/${artist.name}`}>
+                    <ArtistListResult
+                      name={artist.name}
+                      profilePicture={artist.picture_medium}
+                    />
+                  </Link>
+
                   <div className="mt-3 ">
                     <h4 className="font-semibold mb-2">Top Albums:</h4>
                     <div className="flex gap-3 justify-center">
