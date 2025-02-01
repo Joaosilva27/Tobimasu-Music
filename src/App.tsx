@@ -8,6 +8,7 @@ import { Link } from "react-router";
 function App() {
   const [searchArtist, setSearchArtist] = useState<string>("");
   const [isUserSearching, setIsUserSearching] = useState<boolean>(false);
+  const [backgroundColor, setBackgroundColor] = useState<boolean>(false);
   const [currentlySearchingText, setCurrentlySearchingText] =
     useState<string>("");
   const [artistResultList, setArtistResultList] = useState<Array<any>>([]);
@@ -19,6 +20,9 @@ function App() {
   useEffect(() => {
     const saved = localStorage.getItem("favorites");
     if (saved) setFavorites(JSON.parse(saved));
+
+    const savedColor = localStorage.getItem("backgroundColor");
+    if (savedColor) setBackgroundColor(JSON.parse(savedColor));
   }, []);
 
   const onSearchForArtist = (e: React.FormEvent) => {
@@ -60,12 +64,28 @@ function App() {
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
+  const onChangeBackgroundColor = () => {
+    const newColorState = !backgroundColor;
+    setBackgroundColor(newColorState);
+    localStorage.setItem("backgroundColor", JSON.stringify(newColorState));
+  };
+
   return (
-    <div className="flex flex-col min-h-screen p-20 pt-10">
-      <div className="flex justify-center items-center gap-2 mb-14">
-        <span className="text-2xl font-bold red-hat-display-900 text-black">
-          tobimasu
-        </span>
+    <div
+      className={`flex flex-col min-h-screen p-20 pt-10 ${
+        backgroundColor ? "bg-beige" : "pallete-color_background text-beige"
+      }`}
+    >
+      <div className="relative flex justify-center items-center gap-2 mb-14">
+        <button
+          onClick={onChangeBackgroundColor}
+          className={`px-4 py-2 rounded text-black absolute left-0 top-0 ${
+            backgroundColor ? "pallete-color_background" : "bg-beige"
+          }`}
+        >
+          Change Color
+        </button>
+        <span className="text-2xl font-bold red-hat-display-900">tobimasu</span>
         <img className="h-10 w-10" src={VinylIcon} alt="Vinyl Icon" />
       </div>
 
@@ -80,7 +100,7 @@ function App() {
                 value={searchArtist}
               />
               <button
-                className="px-4 py-2 rounded ml-2 text-black pallete-color_background"
+                className="px-4 py-2 rounded ml-2 text-black bg-white"
                 type="submit"
               >
                 SEARCH
@@ -92,7 +112,7 @@ function App() {
             <div className="w-auto pallete-color">
               <span>
                 You are currently searching for:{" "}
-                <span className="font-bold red-hat-display-900 capitalize">
+                <span className="font-bold capitalize">
                   {currentlySearchingText}
                 </span>
               </span>
@@ -108,7 +128,7 @@ function App() {
                     />
                   </Link>
 
-                  <div className="mt-3 ">
+                  <div className="mt-3">
                     <h4 className="font-semibold mb-2">Top Albums:</h4>
                     <div className="flex gap-3 justify-center">
                       {artistAlbums[artist.id]?.slice(0, 5).map((album) => (
@@ -137,15 +157,15 @@ function App() {
           )}
         </div>
 
-        <div className="w-105 p-4 pallete-color rounded flex flex-col items-center h-fit">
-          <h3 className="font-bold text-lg">
-            Your albums added to favorite ❤️
-          </h3>
-          <h2 className="mb-4 red-hat-display-400">
-            Click on the album to remove it
-          </h2>
-          <Album favorites={favorites} onRemove={removeFromFavorites} />
-        </div>
+        {favorites.length > 0 && (
+          <div className="w-105 p-4 pallete-color rounded flex flex-col items-center h-fit">
+            <h3 className="font-bold text-lg">
+              Your albums added to favorite ❤️
+            </h3>
+            <h2 className="mb-4">Click on the album to remove it</h2>
+            <Album favorites={favorites} onRemove={removeFromFavorites} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -13,7 +13,6 @@
 }
 
 body {
-  background-color: #034537;
   color: #d6bfb4;
   min-height: 100vh;
   margin: 0;
@@ -53,7 +52,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -72,9 +70,6 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 /* unused slow vinyl spin */
@@ -89,4 +84,13 @@ button:focus-visible {
 
 .animate-slow-spin {
   animation: slow-spin 200s linear infinite; /* 10s makes it very slow */
+}
+
+.pallete-color_background {
+  background-color: #eae8dc;
+  color: black;
+}
+
+.bg-beige {
+  background-color: #034537;
 }
