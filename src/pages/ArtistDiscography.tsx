@@ -6,16 +6,10 @@ import { useEffect } from "react";
 const ArtistDiscography = () => {
   const { artistName } = useParams();
   const [artistProfilePicture, setArtistProfilePicture] = useState<string>("");
-  const [userFavoriteAlbums, setUserFavoriteAlbums] = useState<Array<string>>(
-    []
-  );
+
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
   );
-
-  useEffect(() => {
-    console.log(userFavoriteAlbums);
-  }, [userFavoriteAlbums]); // here
 
   const addToFavorites = (coverUrl: string) => {
     const currentFavorites = JSON.parse(
@@ -35,7 +29,7 @@ const ArtistDiscography = () => {
         );
         const artistData = artistRes.data.data[0];
 
-        // Get artist albums
+        // get artist albums
         const albumsRes = await axios.get(
           `https://api.deezer.com/artist/${artistData.id}/albums?limit=`
         );
@@ -86,10 +80,10 @@ const ArtistDiscography = () => {
                     />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <span
-                        className="text-white font-bold text-lg"
+                        className="text-white font-bold text-sm hover:cursor-pointer"
                         onClick={() => addToFavorites(album.cover_medium)}
                       >
-                        FAVORITE
+                        FAVORITE ❤️
                       </span>
                     </div>
                   </div>

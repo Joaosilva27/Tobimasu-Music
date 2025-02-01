@@ -61,9 +61,11 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col p-4 min-h-screen p-20 pt-10">
+    <div className="flex flex-col min-h-screen p-20 pt-10">
       <div className="flex justify-center items-center gap-2 mb-14">
-        <span className="text-2xl font-bold">tobimasu</span>
+        <span className="text-2xl font-bold red-hat-display-900 text-black">
+          tobimasu
+        </span>
         <img className="h-10 w-10" src={VinylIcon} alt="Vinyl Icon" />
       </div>
 
@@ -77,7 +79,10 @@ function App() {
                 placeholder="Search for an artist's name"
                 value={searchArtist}
               />
-              <button className="px-4 py-2 bg-black rounded ml-2" type="submit">
+              <button
+                className="px-4 py-2 rounded ml-2 text-black pallete-color_background"
+                type="submit"
+              >
                 SEARCH
               </button>
             </form>
@@ -87,7 +92,9 @@ function App() {
             <div className="w-auto pallete-color">
               <span>
                 You are currently searching for:{" "}
-                <span className="font-bold">{currentlySearchingText}</span>
+                <span className="font-bold red-hat-display-900 capitalize">
+                  {currentlySearchingText}
+                </span>
               </span>
               {artistResultList.map((artist: any) => (
                 <div
@@ -134,7 +141,9 @@ function App() {
           <h3 className="font-bold text-lg">
             Your albums added to favorite ❤️
           </h3>
-          <h2 className="mb-4">Click on the album to remove it</h2>
+          <h2 className="mb-4 red-hat-display-400">
+            Click on the album to remove it
+          </h2>
           <Album favorites={favorites} onRemove={removeFromFavorites} />
         </div>
       </div>

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Red Hat Display", serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 700;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   font-synthesis: none;
@@ -13,9 +13,24 @@
 }
 
 body {
-  background-color: #eae8dc;
+  background-color: #034537;
+  color: #d6bfb4;
   min-height: 100vh;
   margin: 0;
+}
+
+.red-hat-display-400 {
+  font-family: "Red Hat Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.red-hat-display-900 {
+  font-family: "Red Hat Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
 }
 
 a {
