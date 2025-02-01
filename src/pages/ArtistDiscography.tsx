@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const ArtistDiscography = () => {
   const { artistName } = useParams();
   const [artistProfilePicture, setArtistProfilePicture] = useState<string>("");
-  const [backgroundColor, setBackgroundColor] = useState<boolean>(false); // Add this state
+  const [backgroundColor, setBackgroundColor] = useState<boolean>(false);
 
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
