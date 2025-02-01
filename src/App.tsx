@@ -1,7 +1,6 @@
-import "./App.css";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Album from "./components/Album";
-import { useEffect, useState } from "react";
 import ArtistListResult from "./components/ArtistListResult";
 import VinylIcon from "./icons/vinyl.png";
 import { Link } from "react-router";
@@ -15,8 +14,14 @@ function App() {
   const [artistAlbums, setArtistAlbums] = useState<{ [key: string]: any[] }>(
     {}
   );
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-  const onSearchForArtist = (e) => {
+  useEffect(() => {
+    const saved = localStorage.getItem("favorites");
+    if (saved) setFavorites(JSON.parse(saved));
+  }, []);
+
+  const onSearchForArtist = (e: React.FormEvent) => {
     e.preventDefault();
 
     axios
@@ -26,9 +31,7 @@ function App() {
         setArtistResultList(data);
         setCurrentlySearchingText(searchArtist);
         setIsUserSearching(true);
-        console.log(artistResultList);
 
-        // fetching 5 albums for each artist
         const albumPromises = data.map((artist: any) =>
           axios.get(`https://api.deezer.com/artist/${artist.id}/albums?limit=5`)
         );
@@ -51,27 +54,30 @@ function App() {
     setSearchArtist("");
   };
 
+  const removeFromFavorites = (coverUrl: string) => {
+    const updatedFavorites = favorites.filter((url) => url !== coverUrl);
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
+
   return (
-    <div className="flex flex-col p-4 min-h-screen">
-      <div className="flex justify-center">
-        <div className="text-2xl mb-14 font-bold">tobimasu</div>
-        <img className="h-10 w-10" src={VinylIcon} />
+    <div className="flex flex-col p-4 min-h-screen p-20 pt-10">
+      <div className="flex justify-center items-center gap-2 mb-14">
+        <span className="text-2xl font-bold">tobimasu</span>
+        <img className="h-10 w-10" src={VinylIcon} alt="Vinyl Icon" />
       </div>
 
       <div className="flex w-full justify-between gap-8">
         <div className="flex-1">
           <div className="flex gap-2 mb-4">
-            <form className="flex w-full">
+            <form className="flex w-full" onSubmit={onSearchForArtist}>
               <input
                 className="flex-1 p-2 border rounded"
                 onChange={(e) => setSearchArtist(e.target.value)}
                 placeholder="Search for an artist's name"
                 value={searchArtist}
               />
-              <button
-                className="px-4 py-2 bg-black rounded ml-2"
-                onClick={onSearchForArtist}
-              >
+              <button className="px-4 py-2 bg-black rounded ml-2" type="submit">
                 SEARCH
               </button>
             </form>
@@ -124,9 +130,12 @@ function App() {
           )}
         </div>
 
-        <div className="w-80 p-4 bg-gray-100 rounded">
-          <h3 className="font-bold text-lg mb-4">YOUR FAVORITE ALBUMS</h3>
-          <Album />
+        <div className="w-105 p-4 pallete-color rounded flex flex-col items-center h-fit">
+          <h3 className="font-bold text-lg">
+            Your albums added to favorite ❤️
+          </h3>
+          <h2 className="mb-4">Click on the album to remove it</h2>
+          <Album favorites={favorites} onRemove={removeFromFavorites} />
         </div>
       </div>
     </div>

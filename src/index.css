@@ -43,7 +43,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: black;
 }
 button:focus,
 button:focus-visible {
@@ -53,7 +53,6 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
@@ -61,4 +60,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* unused slow vinyl spin */
+@keyframes slow-spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 200s linear infinite; /* 10s makes it very slow */
 }
