@@ -37,7 +37,7 @@ function App() {
         setIsUserSearching(true);
 
         const albumPromises = data.map((artist: any) =>
-          axios.get(`https://api.deezer.com/artist/${artist.id}/albums?limit=5`)
+          axios.get(`https://api.deezer.com/artist/${artist.id}/albums?limit=6`)
         );
 
         Promise.all(albumPromises)
@@ -131,7 +131,7 @@ function App() {
                   <div className="mt-3">
                     <h4 className="font-semibold mb-2">Top Albums:</h4>
                     <div className="flex gap-3 justify-center">
-                      {artistAlbums[artist.id]?.slice(0, 5).map((album) => (
+                      {artistAlbums[artist.id]?.map((album) => (
                         <div
                           key={album.id}
                           className="flex flex-col items-center"
